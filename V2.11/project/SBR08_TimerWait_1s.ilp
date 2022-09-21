@@ -1,0 +1,45 @@
+(*2*)
+(* Network 0 *)
+(*Inicio sumando medio pulso para asegurar que en la llegada del primer flaco de subida ya se haya cumplido un segundo*)
+LD    ENABLE
+TON   T94, 5
+__CR_EQ_1
+MOVE    T94, int0
+__CR_RESTORE
+ST   start
+(* Network 1 *)
+(*YCHTiempo de pulso en OFFEste timer puede contar hasta 2147483647s, o sea unas 596 horas*)
+LD    start
+ANDN    toggle
+AND(
+LD    TRUE
+TON   T95, 5
+__CR_EQ_1
+MOVE    T95, int1
+__CR_RESTORE
+OR(
+LD    TRUE
+R_TRIG
+LT    segElaps, DI#2147483647
+INC    segElaps
+)
+)
+S    toggle
+(* Network 2 *)
+(*YCHTiempo de pulso en ON*)
+LD    start
+AND    toggle
+TON   T96, 5
+__CR_EQ_1
+MOVE    T96, int2
+__CR_RESTORE
+R    toggle
+(* Network 3 *)
+(*YCHPrevio a que se inicie el funcionamiento de este bloque reseteamos el contador de segundos para dejarlo listo para otro ciclo*)
+LDN    start
+MOVE    DI#0, segElaps
+(* Network 4 *)
+(*YCHSi ya pasó el tiempo esperado:- activamos la salida- reseteamos el contador de segundos para dejarlo listo para otro ciclo*)
+LD    start
+GE    segElaps, TimeIn
+ST   OUT

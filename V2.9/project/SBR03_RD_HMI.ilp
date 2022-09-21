@@ -1,0 +1,446 @@
+(*2*)
+(* Network 0 *)
+(*YCHTEMPERATURACorriente minima del sensor*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    AI0_Imin, %VW66
+OR(
+LD    TRUE
+MOVE    %VW66, AI0_Imin
+)
+)
+(* Network 1 *)
+(*YCHTEMPERATURACorriente maxima del sensor*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    AI0_Imax, %VW68
+OR(
+LD    TRUE
+MOVE    %VW68, AI0_Imax
+)
+)
+(* Network 2 *)
+(*YCHTEMPERATURAMagnitud minima del sensor*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    AI0_Mmin, %VR70
+OR(
+LD    TRUE
+MOVE    %VR70, AI0_Mmin
+)
+)
+(* Network 3 *)
+(*YCHTEMPERATURAMagnitud maxima del sensor*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    AI0_Mmax, %VR74
+OR(
+LD    TRUE
+MOVE    %VR74, AI0_Mmax
+)
+)
+(* Network 4 *)
+(*YCHPHCorriente minima del sensor*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    AI1_Imin, %VW152
+OR(
+LD    TRUE
+MOVE    %VW152, AI1_Imin
+)
+)
+(* Network 5 *)
+(*YCHPHCorriente maxima del sensor*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    AI1_Imax, %VW154
+OR(
+LD    TRUE
+MOVE    %VW154, AI1_Imax
+)
+)
+(* Network 6 *)
+(*YCHPHMagnitud minima del sensor*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    AI1_Mmin, %VR156
+OR(
+LD    TRUE
+MOVE    %VR156, AI1_Mmin
+)
+)
+(* Network 7 *)
+(*YCHPHMagnitud maxima del sensor*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    AI1_Mmax, %VR160
+OR(
+LD    TRUE
+MOVE    %VR160, AI1_Mmax
+)
+)
+(* Network 8 *)
+(*YCHORPCorriente minima del sensor*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    AI2_Imin, %VW164
+OR(
+LD    TRUE
+MOVE    %VW164, AI2_Imin
+)
+)
+(* Network 9 *)
+(*YCHORPCorriente maxima del sensor*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    AI2_Imax, %VW166
+OR(
+LD    TRUE
+MOVE    %VW166, AI2_Imax
+)
+)
+(* Network 10 *)
+(*YCHORPMagnitud minima del sensor*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    AI2_Mmin, %VR168
+OR(
+LD    TRUE
+MOVE    %VR168, AI2_Mmin
+)
+)
+(* Network 11 *)
+(*YCHORPMagnitud maxima del sensor*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    AI2_Mmax, %VR172
+OR(
+LD    TRUE
+MOVE    %VR172, AI2_Mmax
+)
+)
+(* Network 12 *)
+(*YCHCAUDAL RAWCorriente minima del sensor*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    AI3_Imin, %VW176
+OR(
+LD    TRUE
+MOVE    %VW176, AI3_Imin
+)
+)
+(* Network 13 *)
+(*YCHCAUDAL RAWCorriente maxima del sensor*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    AI3_Imax, %VW178
+OR(
+LD    TRUE
+MOVE    %VW178, AI3_Imax
+)
+)
+(* Network 14 *)
+(*YCHCAUDAL RAWMagnitud minima del sensor*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    AI3_Mmin, %VR180
+OR(
+LD    TRUE
+MOVE    %VR180, AI3_Mmin
+)
+)
+(* Network 15 *)
+(*YCHCAUDAL RAWMagnitud maxima del sensor*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    AI3_Mmax, %VR184
+OR(
+LD    TRUE
+MOVE    %VR184, AI3_Mmax
+)
+)
+(* Network 16 *)
+(*YCHDistancia minima que puede subir el nivel de agua hasta alcanzar el sensor segun la forma en que está instalado el mismo. Es le valor de ditancia para cuando el agua alcanza su nivel máximo (metros)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+I_TO_DI    DMin, dint0
+DI_TO_R    dint0, real0
+MOVE    real0, %VR82
+DIV    100.0, %VR82
+OR(
+LD    TRUE
+MOVE    %VR82, real0
+MUL    1000.0, real0
+R_TO_DI    real0, dint0
+DI_TO_I    dint0, DMin
+)
+)
+(* Network 17 *)
+(*YCHDistancia maxima que puede haber entre el sensor y el agua cuando segun la forma en que este se intaló. Es el valor de distancia cuando el nive de agua es cero (metros)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+I_TO_DI    DMax, dint0
+DI_TO_R    dint0, real0
+MOVE    real0, %VR86
+DIV    100.0, %VR86
+OR(
+LD    TRUE
+MOVE    %VR86, real0
+MUL    1000.0, real0
+R_TO_DI    real0, dint0
+DI_TO_I    dint0, DMax
+)
+)
+(* Network 18 *)
+(*YCHAltura maxima que puede llegar a alcanzar el agua en el canal (metros)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    HMax, %VR90
+OR(
+LD    TRUE
+MOVE    %VR90, HMax
+)
+)
+(* Network 19 *)
+(*YCHTiempo de muestreo en segundos (TIMER PULL)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    Tpoll, %VW64
+OR(
+LD    TRUE
+MOVE    %VW64, Tpoll
+)
+)
+(* Network 20 *)
+(*YCHTiempo que permanece prendida la bomba de muestro (segundos)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    TOnSampPump, %VW58
+DIV    10, %VW58
+OR(
+LD    TRUE
+MOVE    %VW58, TOnSampPump
+MUL    10, TOnSampPump
+)
+)
+(* Network 21 *)
+(*YCHTiempo que permanece prendida la bomba de limpieza (segundos)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    TOnCleanPump, %VW60
+DIV    10, %VW60
+OR(
+LD    TRUE
+MOVE    %VW60, TOnCleanPump
+MUL    10, TOnCleanPump
+)
+)
+(* Network 22 *)
+(*YCHCantidad de muestras entre limpiezas (cantidad de muestras)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    TBetwSmpClean, %VW62
+OR(
+LD    TRUE
+MOVE    %VW62, TBetwSmpClean
+)
+)
+(* Network 23 *)
+(*YCHVARIABLE QUE INDICA EL TIPO DE MEDICION QUE SE VA  A USAR (0 => METODO DIRECTO / 1 => CANAL SEMICIRCULAR-MANNING) / 2 => VERTEDOR RECTANGULAR / 3 => CANAL DE PARSHALL*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    CaudMethod, %VW50
+OR(
+LD    TRUE
+MOVE    %VW50, CaudMethod
+)
+)
+(* Network 24 *)
+(*YCHMANNINGDIAMETRO DEL CAÑO EN METROS*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    CnD, %VR106
+OR(
+LD    TRUE
+MOVE    %VR106, CnD
+)
+)
+(* Network 25 *)
+(*YCHMANNINGRUGOSIDAD DEL MATERIAL*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    CnN, %VR110
+OR(
+LD    TRUE
+MOVE    %VR110, CnN
+)
+)
+(* Network 26 *)
+(*YCHMANNINGPENDIENTE DEL CAÑO*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    %VR114, CnSo
+OR(
+LD    TRUE
+MOVE    CnSo, %VR114
+)
+)
+(* Network 27 *)
+(*YCHFRANCISANCHO DE LA CRESTA DEL VERTEDOR RECTANGULAR EN METROS*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    LVR, %VR102
+OR(
+LD    TRUE
+MOVE    %VR102, LVR
+)
+)
+(* Network 28 *)
+(*YCHPARSHALLFACTOR DE MULTIPLICACIÓN DE LA FORMULA (ADMINESIONAL)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    PC1, %VR118
+OR(
+LD    TRUE
+MOVE    %VR118, PC1
+)
+)
+(* Network 29 *)
+(*YCHPARSHALLEXPONENTE DE LA FORMULA (ADMINESIONAL)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    Pn, %VR122
+OR(
+LD    TRUE
+MOVE    %VR122, Pn
+)
+)
+(* Network 30 *)
+(*YCHPARSHALLALTURA MÍNIMA DE AGUA QUE EL CANAL PUEDE MEDIR (METROS)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    PHmin, %VR126
+OR(
+LD    TRUE
+MOVE    %VR126, PHmin
+)
+)
+(* Network 31 *)
+(*YCHPARSHALLALTURA MAXIMA DE AGUA QUE EL CANAL PUEDE MEDIR (METROS)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    PHmax, %VR130
+OR(
+LD    TRUE
+MOVE    %VR130, PHmax
+)
+)
+(* Network 32 *)
+(*YCHV TRIANGULARALTURA DEL CANAL HASTA LA SECCIÓN DEL PASAJE (metros)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    TpB, %VR204
+OR(
+LD    TRUE
+MOVE    %VR204, TpB
+)
+)
+(* Network 33 *)
+(*YCHV TRIANGULARANCHO DEL CANAL (metros)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    TB, %VR208
+OR(
+LD    TRUE
+MOVE    %VR208, TB
+)
+)
+(* Network 34 *)
+(*YCHV TRIANGULARANGULO DEL VERTEDOR TRIANGULAR (radianes)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    TA, %VR212
+OR(
+LD    TRUE
+MOVE    %VR212, TA
+)
+)
+(* Network 35 *)
+(*YCHINDICA EL TIPO DE CAUDALIMETRO INSTALADO (0=> ANALOGICO, 1=> PULSOS)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    TypeFlow, %VW150
+OR(
+LD    TRUE
+MOVE    %VW150, TypeFlow
+)
+)
+(* Network 36 *)
+(*YCHANCHO DEL PULSOS (MS)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    TimePulseOn, %VW134
+OR(
+LD    TRUE
+MOVE    %VW134, TimePulseOn
+)
+)
+(* Network 37 *)
+(*YCHTIEMPO EN OFF DEL PULSO (MS)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    TimePulseOff, %VW136
+OR(
+LD    TRUE
+MOVE    %VW136, TimePulseOff
+)
+)
+(* Network 38 *)
+(*YCHVOLUMEN EN M3/H POR PULSOS (MAGPP)*)
+LD    TRUE
+AND(
+LD    %SM0.1
+MOVE    Magpp, %VR146
+OR(
+LD    TRUE
+MOVE    %VR146, Magpp
+)
+)

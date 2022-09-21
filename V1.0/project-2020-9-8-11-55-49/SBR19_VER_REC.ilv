@@ -1,0 +1,16 @@
+VAR_INPUT
+    VHm  AT  %LD208 : REAL ; (* ALTURA DE AGUA DEL CANAL EN METROS *) 
+    VL  AT  %LD244 : REAL ; (* ANCHO DE LA CRESTA DEL CANAL EN METROS *) 
+END_VAR
+VAR_OUTPUT
+    VQm3h  AT  %LD212 : REAL ; (* SALIDA DE CAUDAL EN METROS CÚBICOS HORA *) 
+END_VAR
+VAR
+    cnt_1  AT  %LD216 : REAL ; (*  *) 
+    cnt_2  AT  %LD220 : REAL ; (*  *) 
+    cnt_3  AT  %LD224 : REAL ; (*  *) 
+    link_R  AT  %LD228 : REAL ; (*  *) 
+    cnt_4  AT  %LD232 : REAL ; (*  *) 
+    cnt_5  AT  %LD236 : REAL ; (*  *) 
+    cnt_6  AT  %LD240 : REAL ; (*  *) 
+END_VAR

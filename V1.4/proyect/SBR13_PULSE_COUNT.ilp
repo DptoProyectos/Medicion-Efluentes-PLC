@@ -1,0 +1,20 @@
+(*2*)
+(* Network 0 *)
+LD    TRUE
+AND    %I0.0
+TON   T1, PTON
+__CR_EQ_1
+MOVE    T1, int0
+__CR_RESTORE
+TP   T2, PTOFF
+__CR_EQ_1
+MOVE    T2, int1
+__CR_RESTORE
+CTU   C1, RST, 1
+__CR_EQ_1
+MOVE    C1, COUNT
+__CR_RESTORE
+ST   %BR0.0
+(* Network 1 *)
+LD    TRUE
+STN   RST

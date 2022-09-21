@@ -1,0 +1,76 @@
+(*2*)
+(* Network 0 *)
+(*YCHTiempo que permanece prendida la bomba de muestro (segundos)*)
+LD    TRUE
+MOVE    900, TOnSampPump
+MUL    10, TOnSampPump
+(* Network 1 *)
+(*YCHTIEMPO DE BOMBA DE LIMPIEZATiempo en segundos que permanece prendida la bomba de limpieza*)
+LD    TRUE
+MOVE    120, TOnCleanPump
+MUL    10, TOnCleanPump
+(* Network 2 *)
+(*YCHCANTIDAD DE MUESTRAS ENTRE LIMPIEZAPor defecto se toma muestra y se ejecuta lipieza. NOTA: En lugares si toma de agua se recomienda agrandar estos tiempos*)
+LD    TRUE
+MOVE    1, TBetwSmpClean
+(* Network 3 *)
+(*YCHTIEMPO ENTRE MUESTRASTiempo en segundos que pasa entre el comienzo de un ciclo y otro10 minutos por defecto*)
+LD    TRUE
+MOVE    DI#3600, TimerPoll
+(* Network 4 *)
+(*YCHMETODO USADO EN LA MEDICIÓN DE CAUDAL0 - > Directo 1- > Indirecto*)
+LD    TRUE
+MOVE    0, CaudMethod
+(* Network 5 *)
+(*YCHTIPO DE CAUDALIMETRO0 -> Corriente1- > Pullsos*)
+LD    TRUE
+MOVE    0, TypeFlow
+(* Network 6 *)
+(*YCHDATOS DE INSTLACION DEL SENSOR DE ULTRASONIDODMin -> Distancia mínima que puede haber entre el sensor y el agua según las condiciones de instalación DMax -> Distancia máxima que puede haber entre el sensor y el agua según las condiciones de instalaciónHmin -> Distancia mïnima que puede alcanzar el agua en el canalHmax -> Distancia máxima que puede alcanzar el agua en el canalNOTA: Las distancias si insertan como número intero multiplicando el valor real por 1000.*)
+LD    TRUE
+MOVE    200, DMin
+MOVE    800, DMax
+MOVE    0.0, HMin
+MOVE    0.6, HMax
+(* Network 7 *)
+(*YCHTIPO DE MEDICIÓN DE CAUDAL1 -> CANAL SEMICIRCULAR-MANNING2 -> VERTEDOR RECTANGULAR-FRANCIS3 -> CANAL DE PARSHALL4 -> VERTEDOR TRIANGULAR*)
+LD    TRUE
+MOVE    2, CaudMethod
+(* Network 8 *)
+(*YCHTEMPERATURAConfiguración del canal canal analógico*)
+LD    TRUE
+MOVE    4, AI0_Imin
+MOVE    20, AI0_Imax
+MOVE    0.0, AI0_Mmin
+MOVE    100.0, AI0_Mmax
+MOVE    0.0, AI0_Offset
+(* Network 9 *)
+(*YCHPHConfiguración del canal canal analógico*)
+LD    TRUE
+MOVE    4, AI1_Imin
+MOVE    20, AI1_Imax
+MOVE    0.0, AI1_Mmin
+MOVE    14.0, AI1_Mmax
+MOVE    0.0, AI1_Offset
+(* Network 10 *)
+(*YCHORPConfiguración del canal canal analógico*)
+LD    TRUE
+MOVE    4, AI2_Imin
+MOVE    20, AI2_Imax
+MOVE    -2000.0, AI2_Mmin
+MOVE    2000.0, AI2_Mmax
+MOVE    0.0, AI2_Offset
+(* Network 11 *)
+(*YCHOTHERSConfiguración del canal canal analógico*)
+LD    TRUE
+MOVE    4, AI3_Imin
+MOVE    20, AI3_Imax
+MOVE    0.0, AI3_Mmin
+MOVE    20.0, AI3_Mmax
+MOVE    0.0, AI3_Offset
+(* Network 12 *)
+(*YCHSeñales a mostrar en el display*)
+LD    TRUE
+S    %V3648.3
+S    %V3648.4
+S    %V3648.5

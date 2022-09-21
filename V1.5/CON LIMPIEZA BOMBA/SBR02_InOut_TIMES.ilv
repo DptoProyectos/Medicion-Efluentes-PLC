@@ -1,0 +1,13 @@
+VAR_INPUT
+    Time_1  AT  %LW32 : INT ; (* TIEMPO DE PRENDIDO DE LA BOMBA DE MUESTRA ANTES DE TOMAR LA MISMA  (segundos) *) 
+    Time_2  AT  %LW34 : INT ; (* TIEMPO EN ON DE LA SEÑAL DE POLLEO (segundos) *) 
+    Time_3  AT  %LW36 : INT ; (* TIEMPO DE PRENDIDO DE LA BOMBA DE LIMPIEZA (segundos) *) 
+    Time_4  AT  %LW38 : INT ; (* TIEMPO ENTRE LIMPIEZAS DEL SENSOR (horas) *) 
+    TPOLL  AT  %LW40 : INT ; (* TIEMPO ENTRE MUESTRAS DE DATOS (segundos) *) 
+END_VAR
+VAR
+    tpInSeg  AT  %LW24 : INT ; (* timer poll en segundos *) 
+    tspOnInS  AT  %LW26 : INT ; (* tiempo en ON de lsa señal de polleo en segundos *) 
+    sumt1t2  AT  %LW28 : INT ; (* suma del tiempo de encendido de la bomba de muestreo y el tiempo activo de la señal de muestreo *) 
+    tm4clSeg  AT  %LW30 : INT ; (* conversión a segundos del tiempo de limpieza pasado en horas *) 
+END_VAR

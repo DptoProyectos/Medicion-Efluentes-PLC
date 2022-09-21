@@ -1,0 +1,6 @@
+VAR_INPUT
+    tpoll  AT  %LW32 : INT ; (* tpoll en segundos *) 
+END_VAR
+VAR
+    endWait  AT  %L1.3 : BOOL ; (*  *) 
+END_VAR

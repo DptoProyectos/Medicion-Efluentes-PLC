@@ -1,0 +1,147 @@
+(*2*)
+(* Network 0 *)
+(*YCHSi se esta en un estado distinto de:- 100 -> Estado de espera-  99 -> Estado de condiciones inicialesEn caso de no estar en ninguno de lo anteriores se esta en un estado de lógica del sistema*)
+LD    TRUE
+NE    State, 100
+NE    State, 99
+ST   lgBlock
+(* Network 1 *)
+(*YCHTOMA DE MUESTRAState  = 0*)
+LD    lgBlock
+EQ    State, 0
+MOVE    1, State
+S    %M100.2
+R    %M100.4
+R    %M100.3
+(* Network 2 *)
+(*YCHESPERA POR TOMA DE MUESTRAState  = 1*)
+LD    lgBlock
+EQ    State, 1
+TON   T97, TOnSampPump
+__CR_EQ_1
+MOVE    T97, int9
+__CR_RESTORE
+MOVE    2, State
+(* Network 3 *)
+(*YCHLECTURA DE SENSORESMando a leer las señales analógicas de entradaState  = 2*)
+LD    lgBlock
+EQ    State, 2
+S    %M100.5
+(* Network 4 *)
+(*YCHLECTURA DE SENSORESLeo las entradas analogicas mediante un proceso de multiplexadoTEMP. PH, ORP,  [ CAUDAL | DISTANCIA DEL SENOR AL AGUA ]State  = 2*)
+LD    TRUE
+CAL    SBR09    ReadAin, VirtualAIn0, VirtualAIn1, VirtualAIn2, VirtualAIn3, AInBusy
+CAL    SBR10    AI0_Mmax, VirtualAIn0, AI0_Mmin, AI0_Imax, AI0_Imin, AI0_Alarm, AI0_AlrLow, Temp, AI0_AlrHigh
+CAL    SBR10    AI1_Mmax, VirtualAIn1, AI1_Mmin, AI1_Imax, AI1_Imin, AI1_Alarm, AI1_AlrLow, PH, AI1_AlrHigh
+CAL    SBR10    AI2_Mmax, VirtualAIn2, AI2_Mmin, AI2_Imax, AI2_Imin, AI2_Alarm, AI2_AlrLow, ORP, AI2_AlrHigh
+CAL    SBR10    AI3_Mmax, VirtualAIn3, AI3_Mmin, AI3_Imax, AI3_Imin, AI3_Alarm, AI3_AlrLow, CauRaw, AI3_AlrHigh
+(* Network 5 *)
+(*YCHLECTURA DE SENSORESLeo las entradas analogicas mediante un proceso de multiplexadoState  = 2*)
+LD    lgBlock
+EQ    State, 2
+ANDN    %M100.6
+MOVE    3, State
+R    %M100.5
+(* Network 6 *)
+(*YCHCALCULO DE CAUDALMETODO DIRECTOEs cuando directamente se tiene el caudal directo de la señal analógicaState  = 3*)
+LD    lgBlock
+EQ    State, 3
+EQ    CaudMethod, 0
+MOVE    CauRaw, Caudal
+(* Network 7 *)
+(*YCHCALCULO DE CAUDALMETODO INDIRECTOCalculo la altura del agua en base a la distancia entre el sensor y el agua y los datos de instalación del mismoState  = 3*)
+LD    lgBlock
+EQ    State, 3
+NE    CaudMethod, 0
+MOVE    CauRaw, DCurrent
+AND(
+LD    TRUE
+MOVE    DCurrent, real3
+MUL    1000.0, real3
+OR(
+LD    TRUE
+R_TO_DI    real3, dint3
+)
+OR(
+LD    TRUE
+DI_TO_I    dint3, int3
+)
+OR(
+LD    TRUE
+LINCO    DMin, DMax, HMax, HMin, 1.0, int3, dint5, HOut
+)
+)
+(* Network 8 *)
+(*YCHCALCULO DE CAUDALMETODO INDIRECTOSi la altura calculada es menor que cero visualizo el ceroState  = 3*)
+LD    lgBlock
+EQ    State, 3
+LE    HOut, 0.0
+MOVE    0.0, HOut
+(* Network 9 *)
+(*YCHCALCULO DE CAUDALMETODO INDIRECTOSi la altura calculada es mayor que la altura máxima alcanzable visualizo solo la altura maxima alcanzableState  = 3*)
+LD    lgBlock
+EQ    State, 3
+GE    HOut, HMax
+MOVE    HMax, HOut
+(* Network 10 *)
+(*YCHCALCULO DE CAUDALMETODO INDIRECTOCalculo el caudal según el metodo seleccionadoState  = 3*)
+LD    lgBlock
+EQ    State, 3
+CAL    SBR11    HOut, Caudal
+INC    SampleElaps
+AND(
+LD    TRUE
+GE    SampleElaps, TBetwSmpClean
+MOVE    4, State
+OR(
+LD    TRUE
+LT    SampleElaps, TBetwSmpClean
+MOVE    100, State
+)
+)
+R    %M100.2
+R    %M100.4
+R    %M100.3
+(* Network 11 *)
+(*YCHCLEANINGPrendo la bomba de limpieza y la bomba de toma de muestra para limpiar la manguera de entrada y el filtro con agua limpiaState  = 4*)
+LD    lgBlock
+EQ    State, 4
+MOVE    5, State
+S    %M100.2
+S    %M100.3
+S    %M100.4
+(* Network 12 *)
+(*YCHCLEANINGEspero la mitad del tiempo seteado para la bomba de limpieza con la bomba dosificadora prendida en reversaState  = 5*)
+LD    lgBlock
+EQ    State, 5
+MOVE    TOnCleanPump, int7
+DIV    2, int7
+TON   T98, int7
+__CR_EQ_1
+MOVE    T98, int6
+__CR_RESTORE
+MOVE    6, State
+R    %M100.2
+S    %M100.3
+R    %M100.4
+(* Network 13 *)
+(*YCHCLEANINGEspero la mitad del tiempo seteado para la bomba de limpieza con la bomba dosificadora apagada y la bomba de limpieza prendida para completar la limpiezaState  = 6*)
+LD    lgBlock
+EQ    State, 6
+MOVE    TOnCleanPump, int7
+DIV    2, int7
+TON   T99, int7
+__CR_EQ_1
+MOVE    T99, int6
+__CR_RESTORE
+AND(
+LD    TRUE
+MOVE    0, SampleElaps
+OR(
+LD    TRUE
+MOVE    100, State
+)
+)
+R    %M100.2
+R    %M100.3
+R    %M100.4

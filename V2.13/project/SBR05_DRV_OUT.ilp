@@ -1,0 +1,77 @@
+(*2*)
+(* Network 0 *)
+(*YCHBomba de toma de muestra*)
+LD    %M100.2
+ST   %Q0.0
+(* Network 1 *)
+(*YCHBomba de limpieza*)
+LD    %M100.3
+ST   %Q0.1
+(* Network 2 *)
+(*YCHSentido de la bomba0 -> Subcionar la muestra1 -> Empujar al muestra para destapar el caño de entrada y el sensor*)
+LD    %M100.4
+ST   %Q0.3
+(* Network 3 *)
+(*YCHTEMPERATURAEnvío vía MODBUS la magnitud*)
+LD    TRUE
+MOVE    Temp, mReg2071
+(* Network 4 *)
+(*YCHPHEnvío vía MODBUS la magnitud*)
+LD    TRUE
+MOVE    PH, mReg2069
+(* Network 5 *)
+(*YCHORPEnvío vía MODBUS la magnitud*)
+LD    TRUE
+MOVE    ORP, mReg2073
+(* Network 6 *)
+(*YCHCAUDALEnvío vía MODBUS la magnitud*)
+LD    TRUE
+MOVE    Caudal, mReg2075
+(* Network 7 *)
+(*YCHTEMPEnvío vía MODBUS la alarma del canal analógico*)
+LD    %M100.7
+ST   %V3982.0
+(* Network 8 *)
+(*YCHTEMPEnvío vía MODBUS la indicación de que  la alarma del canal analógico es por overload*)
+LD    %M101.3
+ST   %V3982.1
+(* Network 9 *)
+(*YCHTEMPEnvío vía MODBUS la indicación de que  la alarma del canal analógico es por underload*)
+LD    %M101.7
+ST   %V3982.2
+(* Network 10 *)
+(*YCHPHEnvío vía MODBUS la alarma del canal analógico*)
+LD    %M101.0
+ST   %V3982.3
+(* Network 11 *)
+(*YCHPHEnvío vía MODBUS la indicación de que  la alarma del canal analógico es por overload*)
+LD    %M101.4
+ST   %V3982.4
+(* Network 12 *)
+(*YCHPHEnvío vía MODBUS la indicación de que  la alarma del canal analógico es por underload*)
+LD    %M102.0
+ST   %V3982.5
+(* Network 13 *)
+(*YCHORPEnvío vía MODBUS la alarma del canal analógico*)
+LD    %M101.1
+ST   %V3982.6
+(* Network 14 *)
+(*YCHORPEnvío vía MODBUS la indicación de que  la alarma del canal analógico es por overload*)
+LD    %M101.5
+ST   %V3982.7
+(* Network 15 *)
+(*YCHORPEnvío vía MODBUS la indicación de que  la alarma del canal analógico es por underload*)
+LD    %M102.1
+ST   %V3983.0
+(* Network 16 *)
+(*YCHCAUDAL RAWEnvío vía MODBUS la alarma del canal analógico*)
+LD    %M101.2
+ST   %V3983.1
+(* Network 17 *)
+(*YCHCAUDAL RAWEnvío vía MODBUS la indicación de que  la alarma del canal analógico es por overload*)
+LD    %M101.6
+ST   %V3983.2
+(* Network 18 *)
+(*YCHCAUDAL RAWEnvío vía MODBUS la indicación de que  la alarma del canal analógico es por underload*)
+LD    %M102.2
+ST   %V3983.3

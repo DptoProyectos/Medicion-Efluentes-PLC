@@ -1,0 +1,11 @@
+VAR_INPUT
+    ENABLE  AT  %L0.6 : BOOL ; (*  *) 
+    TimeIn  AT  %LD38 : DINT ; (*  *) 
+END_VAR
+VAR_OUTPUT
+    OUT  AT  %L1.0 : BOOL ; (*  *) 
+END_VAR
+VAR
+    start  AT  %L1.1 : BOOL ; (*  *) 
+    toggle  AT  %L1.2 : BOOL ; (*  *) 
+END_VAR

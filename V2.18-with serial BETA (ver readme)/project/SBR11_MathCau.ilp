@@ -1,0 +1,21 @@
+(*2*)
+(* Network 0 *)
+(*YCHCANAL SEMICIRCULAR-MANNING*)
+LD    TRUE
+EQ    CaudMethod, 1
+CAL    SBR12    CnN, CnD, CnSo, H, Qm3h
+(* Network 1 *)
+(*YCHVERTEDOR RECTANGULAR-FRANCIS*)
+LD    TRUE
+EQ    CaudMethod, 2
+CAL    SBR13    H, LVR, Qm3h
+(* Network 2 *)
+(*YCHCANAL DE PARSHALL*)
+LD    TRUE
+EQ    CaudMethod, 3
+CAL    SBR14    H, Qm3h
+(* Network 3 *)
+(*YCHVERTEDOR TRIANGULAR*)
+LD    TRUE
+EQ    CaudMethod, 4
+CAL    SBR15    H, Qm3h

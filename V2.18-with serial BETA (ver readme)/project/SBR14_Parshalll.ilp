@@ -1,0 +1,38 @@
+(*2*)
+(* Network 0 *)
+(*YCHLo valores de entrada de la funcion se colocan aqui para no ocupar memoria tipo L- ph_VC1 -> FACTOR DE MULTIPLICACIÓN DE LA FORMULA (ADMINESIONAL)- ph_Vn -> EXPONENTE DE LA FORMULA (ADMINESIONAL)- ph_VHmin -> ALTURA MÍNIMA DE AGUA QUE EL CANAL PUEDE MEDIR (METROS)- ph_VHmax -> ALTURA MAXIMA DE AGUA QUE EL CANAL PUEDE MEDIR (METROS)*)
+LD    %SM0.0
+MOVE    PC1, ph_VC1
+MOVE    Pn, ph_Vn
+MOVE    PHmin, ph_VHmin
+MOVE    PHmax, ph_VHmax
+(* Network 1 *)
+(*CUANDO LA ALTURA DEL AGUA ES MENOR QUE LA MINIMA QUE PUEDE MEDIR EL CANAL DECIMOS QUE EL CAUDAL DE SALIDA ES CERO*)
+LD    %SM0.0
+LT    VHm, ph_VHmin
+MOVE    0.0, VQm3h
+(* Network 2 *)
+(*CUANDO LA ALTURA DEL AGUA ESTA EN LOS VALORES PERMISIBLES DEL CANAL CALCULAMOS CAUDAL DE SALIDA*)
+LD    %SM0.0
+GE    VHm, ph_VHmin
+LE    VHm, ph_VHmax
+LN    VHm, real0
+MOVE    real0, real1
+MUL    ph_Vn, real1
+EXP    real1, real1
+MOVE    real1, real0
+MUL    3600.0, real0
+MOVE    real0, VQm3h
+MUL    ph_VC1, VQm3h
+(* Network 3 *)
+(*CUANDO LA ALTURA DEL AGUA ES MAYOR QUE LA MAXIMA QUE PUEDE MEDIR EL CANAL DECIMOS QUE EL CAUDAL DE SALIDA ES EL CAUDAL MÁXIMO*)
+LD    %SM0.0
+GT    VHm, ph_VHmax
+LN    ph_VHmax, real0
+MOVE    real0, real1
+MUL    ph_Vn, real1
+EXP    real1, real1
+MOVE    real1, real0
+MUL    3600.0, real0
+MOVE    real0, VQm3h
+MUL    ph_VC1, VQm3h

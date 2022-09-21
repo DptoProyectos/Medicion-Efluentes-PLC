@@ -1,0 +1,64 @@
+(*2*)
+(* Network 0 *)
+(*Convierto la distancia minima que puede haber del sensor al agua a entero*)
+LD    TRUE
+MOVE    DMIN, link_R
+MUL    1000.0, link_R
+R_TO_DI    link_R, link_DI
+DI_TO_I    link_DI, link_INL
+(* Network 1 *)
+(*Convierto la distancia maxima que puede haber del sensor al agua a entero*)
+LD    TRUE
+MOVE    DMAX, link_R
+MUL    1000.0, link_R
+R_TO_DI    link_R, link_DI
+DI_TO_I    link_DI, link_INH
+(* Network 2 *)
+(*Convierto la distancia actual que existe entre el agua y el sensor a entero*)
+LD    TRUE
+MOVE    DIST, link_R
+MUL    1000.0, link_R
+R_TO_DI    link_R, link_DI
+DI_TO_I    link_DI, link_IN
+(* Network 3 *)
+(*EN ESTE MODULO SE VA A TOMAR LA SEÑAL DE DISTANCIA QUEDA EL SENSOR DE NIVEL, SE CONVIERTE A ALTURA DE AGUA YLUEGO SE LE HACE EL CÁLCULO DE CAUDAL*)
+LD    TRUE
+LINCO    link_INL, link_INH, HMAX, realZero, 1.0, link_IN, trash_DI, ALH
+(* Network 4 *)
+(*si la altura calculada es menor que cero visualizo el cero*)
+LD    TRUE
+LE    ALH, 0.0
+MOVE    0.0, ALH
+(* Network 5 *)
+(*si la altura calculada es mayor que cero visualizo la altura máxima alcanzable*)
+LD    TRUE
+GE    ALH, HMAX
+MOVE    HMAX, ALH
+(* Network 6 *)
+(*CALCULO DE ALTURA A CAUDAL EN METROS CUBICOS HORA*)
+LD    TRUE
+CAL    SBR15    ALH, LVR, QVR
+(* Network 7 *)
+(*CALCULO DE LA CORRIENTE QUE SE QUIERE PONER EN EL PUERTO DE SALIDA*)
+LD    TRUE
+AND(
+LD    TRUE
+CAL    SBR15    HMAX, LVR, link_R
+R_TO_DI    link_R, link_DI
+DI_TO_I    link_DI, QMAX
+OR(
+LD    TRUE
+R_TO_DI    QVR, link_DI1
+DI_TO_I    link_DI1, Qint
+)
+OR(
+LD    TRUE
+MOVE    4000.0, iminReal
+)
+OR(
+LD    TRUE
+MOVE    20000.0, imaxReal
+)
+)
+LINCO    intZero, QMAX, iminReal, imaxReal, 1.0, Qint, link_DI, trash_R
+DI_TO_I    link_DI, IOUT

@@ -1,0 +1,193 @@
+(*2*)
+(* Network 0 *)
+(*YCHMODO DEBUG Y MANTGarantizo que los modos Manteniemiento y Debug queden inhabilitados ante un reinicio del sistema*)
+LD    %SM0.1
+R    %M0.7
+R    %V3648.0
+(* Network 1 *)
+(*YCHDEFAULT CONFIGCondición para ejecutar el bloque de configuraciones iniciales. Solo se ejecuta una vez cuando se descarga el soft del PLC*)
+LDN    %V3648.1
+TON   T12, 1
+__CR_EQ_1
+MOVE    T12, int0
+__CR_RESTORE
+S    %V3648.1
+(* Network 2 *)
+(*YCHINITIAL CONDITIONSCondicion para activar el bloque de condiciones iniciales: - primera corrida del programa- desactivación del modo mant*)
+LDN    %M0.7
+ANDN    %V3648.0
+AND    %SM0.1
+OR(
+LD    %V3648.0
+F_TRIG
+)
+ST   %M102.4
+(* Network 3 *)
+(*YCHDRIVER IN*)
+LD    TRUE
+ST   %M102.5
+(* Network 4 *)
+(*YCHSOFTWARECondiciones para detener el software*)
+LD    TRUE
+AND(
+LD    TRUE
+EQ    State, 100
+TON   T1, 1
+__CR_EQ_1
+MOVE    T1, int0
+__CR_RESTORE
+OR    %V3648.0
+OR    %M0.7
+)
+R    %V3648.6
+(* Network 5 *)
+(*YCHSOFTWARECondiciones para detener el software*)
+LDN    %V3648.0
+ANDN    %M0.7
+NE    State, 100
+S    %V3648.6
+(* Network 6 *)
+(*YCHDRIVER OUT*)
+LDN    %M0.7
+ANDN    %V3648.0
+ST   %V3648.7
+(* Network 7 *)
+(*YCHMATENIMIENTOSe activa el registro para la visualizacion*)
+LD    %V3648.0
+ST   %V4014.0
+(* Network 8 *)
+(*YCHWAITINGCuento el tiempo que pasa ejecutándose el software*)
+LDN    %M0.7
+ANDN    %V3648.0
+ANDN    %SM0.1
+AND(
+LD    %V3648.6
+AND(
+LDN    %M100.5
+TON   T20, 5
+__CR_EQ_1
+MOVE    T20, int0
+__CR_RESTORE
+ALT    toggle0
+OR(
+LD    %M100.5
+TON   T21, 5
+__CR_EQ_1
+MOVE    T21, int1
+__CR_RESTORE
+ALT    toggle0
+LT    SoftCoun, DI#2147483647
+INC    SoftCoun
+)
+)
+OR(
+LDN    %V3648.6
+R_TRIG
+MOVE    SoftCoun, SoftTime
+MOVE    DI#0, SoftCoun
+R_BLK    1, toggle0
+)
+)
+(* Network 9 *)
+(*YCHWAITINGCalculo cuanto tiempo tengo que esperar antes de volver a ejecutar el bloque de software para poder cumplir un tpolly espero el mismo para cumplir los ciclos de tiempo*)
+LDN    %M0.7
+ANDN    %V3648.0
+ANDN    %SM0.1
+AND(
+LDN    %V3648.6
+AND(
+LD    TRUE
+GE    TimPoll, SoftTime
+MOVE    TimPoll, t4wait
+SUB    SoftTime, t4wait
+OR(
+LD    TRUE
+LT    TimPoll, SoftTime
+MOVE    DI#0, t4wait
+)
+OR(
+LDN    %M100.6
+TON   T22, 5
+__CR_EQ_1
+MOVE    T22, int0
+__CR_RESTORE
+ALT    toggle1
+)
+OR(
+LD    %M100.6
+TON   T23, 5
+__CR_EQ_1
+MOVE    T23, int1
+__CR_RESTORE
+ALT    toggle1
+LT    WaitCoun, DI#2147483647
+INC    WaitCoun
+GE    WaitCoun, t4wait
+MOVE    0, State
+)
+)
+OR(
+LD    %V3648.6
+R_TRIG
+MOVE    DI#0, WaitCoun
+R_BLK    1, toggle1
+)
+)
+(* Network 10 *)
+(*YCHReseteo de contadores*)
+LD    %SM0.1
+OR(
+LD    %V3648.0
+F_TRIG
+)
+MOVE    DI#0, WaitCoun
+MOVE    DI#0, SoftCoun
+R_BLK    1, toggle0
+R_BLK    1, toggle1
+(* Network 11 *)
+(*YCHMODO MANT Y DEBUGLeo continuamente las entradas analógicas para refrescarlas en el HMI*)
+LD    %M0.7
+OR    %V3648.0
+AND(
+LDN    %M0.0
+TON   T24, 1
+__CR_EQ_1
+MOVE    T24, int0
+__CR_RESTORE
+S_BLK    1, ReadAin
+AND    %M102.7
+F_TRIG
+R_BLK    1, ReadAin
+S_BLK    1, bool0
+OR(
+LD    %M0.0
+TON   T25, 1
+__CR_EQ_1
+MOVE    T25, int1
+__CR_RESTORE
+S_BLK    1, ReadAin
+AND    %M102.7
+F_TRIG
+R_BLK    1, ReadAin
+R_BLK    1, bool0
+)
+)
+(* Network 12 *)
+(*MODO MANT*)
+LD    %V3648.0
+R_TRIG
+R    %Q0.0
+R    %Q0.1
+R    %Q0.3
+(* Network 13 *)
+(*MODO MANTSalgo del modo mantenimiento pasado una hora*)
+LD    %V3648.0
+TON   T81, 32767
+__CR_EQ_1
+MOVE    T81, int9
+__CR_RESTORE
+TON   T82, 3233
+__CR_EQ_1
+MOVE    T82, int8
+__CR_RESTORE
+R    %V3648.0

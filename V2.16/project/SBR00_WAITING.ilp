@@ -1,0 +1,55 @@
+(*2*)
+(* Network 0 *)
+(*YCHCondición inicial de temporizadores1- Pongo en cero el tiempo que registra cuanto dura el proceso de inserción y toma de muestra*)
+LD    %SM0.1
+MOVE    DI#0, tsmp
+(* Network 1 *)
+(*YCHConvierto el tpoll a segundos*)
+LD    TRUE
+I_TO_DI    Tpoll, tpollseg
+(* Network 2 *)
+(*YCHDoy la señal de Enable al bloque que va a contar los segundos que toma el proceso de toma e inserción de la muestra*)
+LD    TRUE
+NE    State, 100
+ST   %M100.0
+(* Network 3 *)
+LD    TRUE
+CAL    SBR07    otherSt, tsmp
+(* Network 4 *)
+(*YCHCalculo el tiempo en segndos que se tiene que se esperar entre un proceso de toma e inserción de muestra y otro para completar un timerpollSi pasa que el proceso de toma e inserción de la muestra tarda más tiempo que el tpoll declarado, automaticamente terminado un proceso comienza el otro*)
+LD    TRUE
+NE    State, 100
+AND(
+LD    TRUE
+GE    tpollseg, tsmp
+MOVE    tpollseg, t4wait
+SUB    tsmp, t4wait
+OR(
+LD    TRUE
+LT    tpollseg, tsmp
+MOVE    DI#0, t4wait
+)
+OR(
+LD    TRUE
+MOVE    tsmp, M_segElaps
+)
+)
+(* Network 5 *)
+(*YCH - Reinicio el contador de segundos que tarda el proceso de toma e insersión de muestras para dejarlo listo para el proximo proceso*)
+LD    %SM0.0
+EQ    State, 100
+MOVE    DI#0, tsmp
+(* Network 6 *)
+(*YCHDoy señal de enable al bloque que va a esperar los segundos*)
+LD    %SM0.0
+EQ    State, 100
+ST   %M100.1
+(* Network 7 *)
+(*YCHEspero los segundos previamente calculadosPasado ese tiempo me voy para el estado 0 para comenzar un nuevo ciclo de toma e inserción de muestra*)
+LD    TRUE
+CAL    SBR08    timerSt, t4wait, endWait
+(* Network 8 *)
+(*YCHSi ya pasé el tiempo que se debe esperar para completar el ciclo de toma de muestra me muevo para el estados cero*)
+LD    endWait
+EQ    State, 100
+MOVE    0, State

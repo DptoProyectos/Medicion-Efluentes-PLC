@@ -1,0 +1,3 @@
+VAR
+    time24  AT  %LW252 : INT ; (*  *) 
+END_VAR

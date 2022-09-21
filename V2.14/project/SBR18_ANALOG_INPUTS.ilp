@@ -1,0 +1,45 @@
+(*2*)
+(* Network 0 *)
+(*YCHREAD ANALOG INPUTSLeo las entradas analogicas mediante un proceso de multiplexadoTEMP. PH, ORP,  [ CAUDAL | DISTANCIA DEL SENOR AL AGUA ]State  = 2*)
+LD    TRUE
+CAL    SBR09    ReadAin, VirtualAIn0, VirtualAIn1, VirtualAIn2, VirtualAIn3, AInBusy
+CAL    SBR27    AI0_Offset, AI0_Mmax, AI0_Mmin, VirtualAIn0, AI0_Imax, AI0_Imin, AI0_Alarm, AI0_AlrLow, Temp, AI0_AlrHigh
+CAL    SBR10    AI1_Offset, AI1_Mmax, AI1_Mmin, VirtualAIn1, AI1_Imax, AI1_Imin, AI1_Alarm, AI1_AlrLow, PH, AI1_AlrHigh
+CAL    SBR19    AI2_Offset, AI2_Mmax, AI2_Mmin, VirtualAIn2, AI2_Imax, AI2_Imin, AI2_Alarm, AI2_AlrLow, ORP, AI2_AlrHigh
+CAL    SBR20    AI3_Offset, AI3_Mmax, AI3_Mmin, VirtualAIn3, AI3_Imax, AI3_Imin, AI3_Alarm, AI3_AlrLow, CauRaw, AI3_AlrHigh
+(* Network 1 *)
+(*YCHACTIVACIÓN DE ALARMASCondiciones para desactivar las alarmas en el HMI*)
+LDN    %M100.7
+ANDN    %M101.0
+ANDN    %M101.1
+AND(
+LDN    %M101.2
+OR(
+LD    TRUE
+NE    CaudMethod, 0
+)
+OR(
+LD    TRUE
+NE    TypeFlow, 0
+)
+)
+R    %M103.0
+(* Network 2 *)
+(*YCHACTIVACIÓN DE ALARMASCondiciones para activar las alarmas en el HMI*)
+LD    %V3648.3
+AND    %M100.7
+OR(
+LD    %V3648.4
+AND    %M101.0
+)
+OR(
+LD    %V3648.5
+AND    %M101.1
+)
+OR(
+LD    %V3648.2
+EQ    CaudMethod, 0
+EQ    TypeFlow, 0
+AND    %M101.2
+)
+S    %M103.0

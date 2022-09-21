@@ -1,0 +1,10 @@
+(*2*)
+(* Network 0 *)
+(*STATE 2TIMER 1*)
+LD    TRUE
+EQ    STATE, 4
+TON   T21, 30
+__CR_EQ_1
+MOVE    T21, int9
+__CR_RESTORE
+MOVE    5, STATE

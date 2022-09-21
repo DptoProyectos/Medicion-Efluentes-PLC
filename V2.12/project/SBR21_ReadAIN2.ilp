@@ -1,0 +1,57 @@
+(*2*)
+(* Network 0 *)
+(*multiplicación de I_MIN * 1000*)
+LD    %SM0.0
+MOVE    IMIN, iminxmil
+MUL    1000, iminxmil
+(* Network 1 *)
+(*multiplicación de I_MAX * 1000*)
+LD    %SM0.0
+MOVE    IMAX, imaxxmil
+MUL    1000, imaxxmil
+(* Network 2 *)
+(*escalado de la señal de entrada*)
+LD    %SM0.0
+LINCO    iminxmil, imaxxmil, MMIN, MMAX, 1.0, AIN, trash_DI, AO
+(* Network 3 *)
+(*CASO EN QUE MMAX > MMINalarma por sensor con valor muy bajo*)
+LD    TRUE
+AND(
+LD    TRUE
+GT    MMAX, MMIN
+LT    AO, MMIN
+MOVE    1.0, AO
+MUL    MMIN, AO
+OR(
+LD    TRUE
+GT    MMIN, MMAX
+GT    AO, MMIN
+MOVE    1.0, AO
+MUL    MMIN, AO
+)
+)
+ST   LOW
+(* Network 4 *)
+(*CASO EN QUE MMAX > MMINalarma por sensor con valor muy alto*)
+LD    TRUE
+AND(
+LD    TRUE
+GT    MMAX, MMIN
+GT    AO, MMAX
+MOVE    1.0, AO
+MUL    MMAX, AO
+OR(
+LD    TRUE
+GT    MMIN, MMAX
+LT    AO, MMAX
+MOVE    1.0, AO
+MUL    MMAX, AO
+)
+)
+ST   HIG
+(* Network 5 *)
+(*activación de alarma cuando pasen 5 segundos calor fuera de rango*)
+LD    LOW
+OR    HIG
+TON   T6, 500
+ST   ALAR

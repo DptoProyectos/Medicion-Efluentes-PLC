@@ -1,0 +1,148 @@
+(*2*)
+(* Network 0 *)
+(*METODO DIRECTOCALCULO DE CAUDAL CUANDO ES METODO DIRECTO (EL CAUDAL SE TOMA DE FORMA DIRECTA DEL CANAL ANALOGICO)*)
+LD    TRUE
+EQ    TYPE_CHAN, 0
+EQ    TYPE_FLOW, 0
+AND(
+LD    TRUE
+MOVE    IN_MAG, Qm3H
+OR(
+LD    TRUE
+MOVE    AI_MMAX, Qm3HmaxReal
+)
+OR(
+LD    TRUE
+MOVE    %AIW0, IOUT
+)
+)
+(* Network 1 *)
+(*METODO DIRECTOCALCULO DE CAUDAL CUANDO ES METODO DIRECTO (EL CAUDAL SE TOMA DE FORMA DIRECTA DEL CANAL DE PULSOS*)
+LD    TRUE
+EQ    TYPE_CHAN, 0
+EQ    TYPE_FLOW, 1
+AND(
+LD    TRUE
+I_TO_DI    COUNT_PULSES, dint0
+DI_TO_R    dint0, real0
+MUL    MAGPP, real0
+OR(
+LD    TRUE
+I_TO_DI    T_POLL, dint1
+DI_TO_R    dint1, real1
+)
+)
+MOVE    real0, real2
+MUL    3600.00, real2
+MOVE    real2, Qm3H
+DIV    real1, Qm3H
+(* Network 2 *)
+LD    TRUE
+ST   %M21.7
+(* Network 3 *)
+(*METODO INDIRECTOSI EL METODO SELECCIONADO ES DISTINTO DE CERO (INDIRECTO)  VA A TOMAR LA SEÑAL DE DISTANCIA QUEDA EL SENSOR DE NIVEL Y SE CONVIERTE A ALTURA DE AGUASi la altura calculada es menor que cero visualizo el ceroSi la altura calculada es mayor que cero visualizo la altura máxima alcanzable*)
+LD    TRUE
+NE    TYPE_CHAN, 0
+AND(
+LD    TRUE
+MOVE    DMIN, real0
+MUL    1000.0, real0
+R_TO_DI    real0, dint0
+DI_TO_I    dint0, dminInt
+OR(
+LD    TRUE
+MOVE    DMAX, real0
+MUL    1000.0, real0
+R_TO_DI    real0, dint0
+DI_TO_I    dint0, dmaxInt
+)
+OR(
+LD    TRUE
+MOVE    IN_MAG, real0
+MUL    1000.0, real0
+R_TO_DI    real0, dint0
+DI_TO_I    dint0, dcurrInt
+)
+OR(
+LD    TRUE
+LINCO    dminInt, dmaxInt, HMAX, realZero, 1.0, dcurrInt, dint9, ALH
+)
+OR(
+LD    TRUE
+LE    ALH, 0.0
+MOVE    0.0, ALH
+)
+OR(
+LD    TRUE
+GE    ALH, HMAX
+MOVE    HMAX, ALH
+)
+)
+(* Network 4 *)
+(*METODO INDIRECTOCALCULO DE ALTURA A CAUDAL EN METROS CUBICOS HORA SEGUN FORMULA DE MANNING Y CAUDAL MÁXIMO*)
+LD    TRUE
+EQ    TYPE_CHAN, 1
+AND(
+LD    TRUE
+CAL    SBR16    ALH, CnD, CnN, CnSo, Qm3H
+OR(
+LD    TRUE
+CAL    SBR16    HMAX, CnD, CnN, CnSo, Qm3HmaxReal
+)
+)
+(* Network 5 *)
+(*METODO INDIRECTOCALCULO DE ALTURA A CAUDAL EN METROS CUBICOS HORA SEGUN FORMULA DEL VERTEDOR RECTANGULAR Y CAUDAL MÁXIMO*)
+LD    TRUE
+EQ    TYPE_CHAN, 2
+AND(
+LD    TRUE
+CAL    SBR15    ALH, LVR, Qm3H
+OR(
+LD    TRUE
+CAL    SBR15    HMAX, LVR, Qm3HmaxReal
+)
+)
+(* Network 6 *)
+(*METODO INDIRECTOCALCULO DE ALTURA A CAUDAL EN METROS CUBICOS HORA SEGUN FORMULA DE PARSHALL Y CAUDAL MÁXIMO*)
+LD    TRUE
+EQ    TYPE_CHAN, 3
+AND(
+LD    TRUE
+CAL    SBR17    ALH, PC1, Pn, PHmin, PHmax, Qm3H
+OR(
+LD    TRUE
+CAL    SBR17    HMAX, PC1, Pn, PHmin, PHmax, Qm3HmaxReal
+)
+)
+(* Network 7 *)
+(*METODO INDIRECTO O DIRECTO CON CAUDAL DE PULSOCALCULO DE LA CORRIENTE QUE SE QUIERE PONER EN EL PUERTO DE SALIDA*)
+LD    TRUE
+AND(
+LD    TRUE
+NE    TYPE_CHAN, 0
+OR(
+LD    TRUE
+EQ    TYPE_CHAN, 0
+EQ    TYPE_FLOW, 1
+)
+)
+AND(
+LD    TRUE
+R_TO_DI    Qm3HmaxReal, dint0
+DI_TO_I    dint0, QMAX
+OR(
+LD    TRUE
+R_TO_DI    Qm3H, dint1
+DI_TO_I    dint1, int1
+)
+OR(
+LD    TRUE
+MOVE    4000.0, real1
+)
+OR(
+LD    TRUE
+MOVE    20000.0, real2
+)
+)
+LINCO    intZero, QMAX, real1, real2, 1.0, int1, dint0, real9
+DI_TO_I    dint0, IOUT

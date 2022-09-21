@@ -1,0 +1,122 @@
+(*2*)
+(* Network 0 *)
+(*YCHTAKE SAMPLEState  = 0NOTA: El timer t101 es para que hayan varios ciclos de máquina antes de pasar a estado 1 y poder reiniciar el timer t97*)
+LD    TRUE
+EQ    State, 0
+TON   T101, 1
+__CR_EQ_1
+MOVE    T101, int0
+__CR_RESTORE
+MOVE    1, State
+S    %M100.2
+R    %M100.4
+R    %M100.3
+(* Network 1 *)
+(*YCHWAIT4SAMPLEState  = 1*)
+LD    TRUE
+EQ    State, 1
+TON   T97, TOnSampPump
+__CR_EQ_1
+MOVE    T97, ElapTSampPump
+__CR_RESTORE
+MOVE    2, State
+R    %M100.2
+R    %M100.4
+R    %M100.3
+(* Network 2 *)
+(*YCHREAD ANALOG INPUTSDoy señal para inciar lectura de las entradas analógicas y espero que termineApago todas las bombasState  = 0*)
+LD    TRUE
+EQ    State, 2
+TON   T100, 100
+__CR_EQ_1
+MOVE    T100, int9
+__CR_RESTORE
+S_BLK    1, ReadAin
+AND    %M102.7
+F_TRIG
+MOVE    3, State
+R    %M102.6
+R    %M100.2
+R    %M100.4
+R    %M100.3
+(* Network 3 *)
+(*YCHMATH CAUCalculo el caudal según sea el metodo seleccionadoState  = 3*)
+LD    TRUE
+EQ    State, 3
+AND(
+LD    TRUE
+EQ    CaudMethod, 0
+AND(
+LD    TRUE
+EQ    TypeFlow, 0
+MOVE    CauRaw, Caudal
+OR(
+LD    TRUE
+EQ    TypeFlow, 1
+CAL    SBR17
+)
+)
+OR(
+LD    TRUE
+NE    CaudMethod, 0
+MOVE    CauRaw, DCurrent
+MOVE    DCurrent, DCurrentx1000
+MUL    1000.0, DCurrentx1000
+R_TO_DI    DCurrentx1000, DCurrentDint
+DI_TO_I    DCurrentDint, IntDist
+LINCO    DMin, DMax, HMax, HMin, 1.0, IntDist, dint5, HOut
+CAL    SBR11    HOut, Caudal
+)
+)
+(* Network 4 *)
+(*YCHMATH CAUDecido si ejecuto o nó limpiezaState  = 3*)
+LD    TRUE
+EQ    State, 3
+INC    SampleElaps
+AND(
+LD    TRUE
+GE    SampleElaps, TBetwSmpClean
+MOVE    4, State
+OR(
+LD    TRUE
+LT    SampleElaps, TBetwSmpClean
+MOVE    100, State
+)
+)
+(* Network 5 *)
+(*YCHCLEANING 1.1Prendo la bomba de limpieza y la bomba de toma de muestra para limpiar la manguera de entrada y el filtro con agua limpiaState  = 4*)
+LD    TRUE
+EQ    State, 4
+MOVE    5, State
+R    %M100.2
+S    %M100.3
+S    %M100.4
+(* Network 6 *)
+(*YCHCLEANING 1.2Espero la mitad del tiempo seteado para la bomba de limpieza con la bomba dosificadora prendida en reversaState  = 5*)
+LD    TRUE
+EQ    State, 5
+MOVE    TOnCleanPump, int7
+DIV    2, int7
+TON   T98, int7
+__CR_EQ_1
+MOVE    T98, int6
+__CR_RESTORE
+MOVE    6, State
+S    %M100.2
+S    %M100.3
+S    %M100.4
+(* Network 7 *)
+(*YCHCLEANING 1.3Espero la mitad del tiempo seteado para la bomba de limpieza con la bomba dosificadora apagada y la bomba de limpieza prendida para completar la limpiezaState  = 6*)
+LD    TRUE
+EQ    State, 6
+MOVE    TOnCleanPump, int7
+DIV    2, int7
+TON   T99, int7
+__CR_EQ_1
+MOVE    T99, int6
+__CR_RESTORE
+MOVE    0, SampleElaps
+MOVE    100, State
+R    %M100.2
+R    %M100.3
+R    %M100.4

@@ -1,0 +1,50 @@
+(*2*)
+(* Network 0 *)
+(*PRIMER PASO PARA CALCULAR EL COEFICIENTE Cd        3B(h+p)*)
+LD    %SM0.0
+MOVE    h, real0
+ADD    pB, real0
+MUL    B, real0
+MUL    3.0, real0
+(* Network 1 *)
+(*SEGUNDO PASO PARA CALCULAR EL COEFICIENTE Cd         1+ (h2*TAN(angulo/2)/3B(h+p))2*)
+LD    %SM0.0
+MOVE    angulo, real3
+DIV    2.0, real3
+TAN    real3, tang
+MOVE    h, real4
+MUL    h, real4
+MOVE    tang, real3
+MUL    real4, real3
+DIV    real0, real3
+MUL    real3, real3
+ADD    1.0, real3
+DIV    1.731, real3
+(* Network 2 *)
+(*CALCULO DE Cd FINAL, la altura en esta parte hay que llevarla a centímetros    1+(0.66/(h3/2*tg(a/2)))*)
+LD    %SM0.0
+MOVE    h, real0
+MUL    100.0, real0
+MOVE    real0, real6
+MUL    real0, real6
+MUL    real0, real6
+SQRT    real6, real6
+MUL    tang, real6
+MOVE    0.66, real7
+DIV    real6, real7
+ADD    1.0, real7
+MUL    real3, real7
+(* Network 3 *)
+(*CALCULO DEL CAUDAL DE SALIDA*)
+LD    %SM0.0
+MOVE    h, real4
+MUL    h, real4
+MUL    h, real4
+MUL    h, real4
+MUL    h, real4
+SQRT    real4, real4
+MUL    2.3611673, real4
+MUL    real7, real4
+MUL    tang, real4
+MOVE    real4, Qsalida
+MUL    3600.0, Qsalida

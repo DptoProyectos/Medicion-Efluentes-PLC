@@ -1,0 +1,10 @@
+(*2*)
+(* Network 0 *)
+LD    TRUE
+MOVE    QVR, VQ
+(* Network 1 *)
+LD    TRUE
+MOVE    VLg, LVR
+(* Network 2 *)
+LD    TRUE
+MOVE    QMAX, VQmax

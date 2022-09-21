@@ -1,0 +1,69 @@
+(*2*)
+(* Network 0 *)
+(*YCHTEMPERATURAEnvío vía MODBUS la magnitud*)
+LD    TRUE
+MOVE    Temp, mReg2071
+(* Network 1 *)
+(*YCHPHEnvío vía MODBUS la magnitud*)
+LD    TRUE
+MOVE    PH, mReg2069
+(* Network 2 *)
+(*YCHORPEnvío vía MODBUS la magnitud*)
+LD    TRUE
+MOVE    ORP, mReg2073
+(* Network 3 *)
+(*YCHCAUDALEnvío vía MODBUS la magnitud*)
+LD    TRUE
+MOVE    Caudal, mReg2075
+(* Network 4 *)
+(*YCHTEMPEnvío vía MODBUS la alarma del canal analógico*)
+LD    %M100.7
+ST   %V4014.0
+(* Network 5 *)
+(*YCHTEMPEnvío vía MODBUS la indicación de que  la alarma del canal analógico es por overload*)
+LD    %M101.3
+ST   %V4014.1
+(* Network 6 *)
+(*YCHTEMPEnvío vía MODBUS la indicación de que  la alarma del canal analógico es por underload*)
+LD    %M101.7
+ST   %V4014.2
+(* Network 7 *)
+(*YCHPHEnvío vía MODBUS la alarma del canal analógico*)
+LD    %M101.0
+ST   %V4014.3
+(* Network 8 *)
+(*YCHPHEnvío vía MODBUS la indicación de que  la alarma del canal analógico es por overload*)
+LD    %M101.4
+ST   %V4014.4
+(* Network 9 *)
+(*YCHPHEnvío vía MODBUS la indicación de que  la alarma del canal analógico es por underload*)
+LD    %M102.0
+ST   %V4014.5
+(* Network 10 *)
+(*YCHORPEnvío vía MODBUS la alarma del canal analógico*)
+LD    %M101.1
+ST   %V4014.6
+(* Network 11 *)
+(*YCHORPEnvío vía MODBUS la indicación de que  la alarma del canal analógico es por overload*)
+LD    %M101.5
+ST   %V4014.7
+(* Network 12 *)
+(*YCHORPEnvío vía MODBUS la indicación de que  la alarma del canal analógico es por underload*)
+LD    %M102.1
+ST   %V4015.0
+(* Network 13 *)
+(*YCHCAUDAL RAWEnvío vía MODBUS la alarma del canal analógico*)
+LD    %M101.2
+ST   %V4015.1
+(* Network 14 *)
+(*YCHCAUDAL RAWEnvío vía MODBUS la indicación de que  la alarma del canal analógico es por overload*)
+LD    %M101.6
+ST   %V4015.2
+(* Network 15 *)
+(*YCHCAUDAL RAWEnvío vía MODBUS la indicación de que  la alarma del canal analógico es por underload*)
+LD    %M102.2
+ST   %V4015.3
+(* Network 16 *)
+(*YCHSEÑAL DE NOT RUNSGNIndica que se fue a iniciar un proceso de toma de muestra, sin embargo no se pudo completar debido a que no está presente la señal RunSgn*)
+LD    %M103.2
+ST   %V4015.4

@@ -1,0 +1,13 @@
+(*2*)
+(* Network 0 *)
+(*YCHBomba de toma de muestra*)
+LD    %M100.2
+ST   %Q0.0
+(* Network 1 *)
+(*YCHBomba de limpieza*)
+LD    %M100.3
+ST   %Q0.1
+(* Network 2 *)
+(*YCHSentido de la bomba0 -> Subcionar la muestra1 -> Empujar al muestra para destapar el caño de entrada y el sensor*)
+LD    %M100.4
+ST   %Q0.3

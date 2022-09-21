@@ -1,0 +1,49 @@
+(*2*)
+(* Network 0 *)
+(*Condiciones que se establecen cuando el equipo se restablece de un fallo electrico o se pasa a modo RUN*)
+LD    %SM0.1
+CAL    SBR01    STATE
+(* Network 1 *)
+(*ENTRADAS Y SALIDAS DEL SOFTWARE*)
+LD    %SM0.0
+CAL    SBR02    %VW3648, %VW3652, %VW3656, %VW3660, %VW3664
+CAL    SBR15    %VW3668, %VW3672, %VR3676, %VR3680, %M0.0, %M0.1, %M0.2
+CAL    SBR16    %M1.0, %M1.1, %M1.2, %M1.3, %VR0
+CAL    SBR17    %VR3684, %VR3688, %VR3692, %VR12, %VR4
+CAL    SBR18    %VR3696, %VR8, %VW16
+(* Network 2 *)
+LD    %SM0.0
+CAL    SBR03
+(* Network 3 *)
+LD    %SM0.0
+CAL    SBR04
+(* Network 4 *)
+LD    %SM0.0
+CAL    SBR05
+(* Network 5 *)
+LD    %SM0.0
+CAL    SBR06
+(* Network 6 *)
+LD    %SM0.0
+CAL    SBR07
+(* Network 7 *)
+LD    %SM0.0
+CAL    SBR08
+(* Network 8 *)
+LD    %SM0.0
+CAL    SBR09
+(* Network 9 *)
+LD    %SM0.0
+CAL    SBR10
+(* Network 10 *)
+LD    %SM0.0
+CAL    SBR11
+(* Network 11 *)
+LD    %SM0.0
+CAL    SBR20
+(* Network 12 *)
+LD    %SM0.0
+CAL    SBR21
+(* Network 13 *)
+LD    %SM0.0
+CAL    SBR00    DO_0, DO_1, DO_3, DO_2

@@ -1,0 +1,73 @@
+(*2*)
+(* Network 0 *)
+(*YCHTEMPERATURABit que se activa cuando hay un evento de alarma en el canal analógico*)
+LD    %M100.7
+ST   %M80.0
+(* Network 1 *)
+(*YCHTEMPERATURABit que se activa cuando la alarma se produce por overload (corriente mayor que Imax)*)
+LD    %M101.3
+ST   %M80.1
+(* Network 2 *)
+(*YCHTEMPERATURABit que se activa cuando la alarma se produce por underload (corriente menor que Imin)*)
+LD    %M101.7
+ST   %M80.2
+(* Network 3 *)
+(*YCHTEMPERATURAMuestro en el HMI la mgnitud leida*)
+LD    TRUE
+MOVE    Temp, %VR188
+(* Network 4 *)
+(*YCHPHBit que se activa cuando hay un evento de alarma en el canal analógico*)
+LD    %M101.0
+ST   %M81.0
+(* Network 5 *)
+(*YCHPHBit que se activa cuando la alarma se produce por overload (corriente mayor que Imax)*)
+LD    %M101.4
+ST   %M81.1
+(* Network 6 *)
+(*YCHPHBit que se activa cuando la alarma se produce por underload (corriente menor que Imin)*)
+LD    %M102.0
+ST   %M81.2
+(* Network 7 *)
+(*YCHPHMuestro en el HMI la mgnitud leida*)
+LD    TRUE
+MOVE    PH, %VR192
+(* Network 8 *)
+(*YCHORPBit que se activa cuando hay un evento de alarma en el canal analógico*)
+LD    %M101.1
+ST   %M81.3
+(* Network 9 *)
+(*YCHORPBit que se activa cuando la alarma se produce por overload (corriente mayor que Imax)*)
+LD    %M101.5
+ST   %M81.4
+(* Network 10 *)
+(*YCHORPBit que se activa cuando la alarma se produce por underload (corriente menor que Imin)*)
+LD    %M102.1
+ST   %M81.5
+(* Network 11 *)
+(*YCHORPMuestro en el HMI la mgnitud leida*)
+LD    TRUE
+MOVE    ORP, %VR196
+(* Network 12 *)
+(*YCHCAUDAL RAWBit que se activa cuando hay un evento de alarma en el canal analógico*)
+LD    %M101.2
+ST   %M81.6
+(* Network 13 *)
+(*YCHCAUDAL RAWBit que se activa cuando la alarma se produce por overload (corriente mayor que Imax)*)
+LD    %M101.6
+ST   %M81.7
+(* Network 14 *)
+(*YCHCAUDAL RAWBit que se activa cuando la alarma se produce por underload (corriente menor que Imin)*)
+LD    %M102.2
+ST   %M82.0
+(* Network 15 *)
+(*YCHDistancia actual del sensor al agua*)
+LD    TRUE
+MOVE    DCurrent, %VR94
+(* Network 16 *)
+(*YCHAltura actual del agua en metros*)
+LD    TRUE
+MOVE    HOut, %VR98
+(* Network 17 *)
+(*YCHCaudal de salida en m3h*)
+LD    TRUE
+MOVE    Caudal, %VR52

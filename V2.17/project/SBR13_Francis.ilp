@@ -1,0 +1,23 @@
+(*2*)
+(* Network 0 *)
+(*FORMULA DE FRANSIS*)
+LD    TRUE
+MOVE    VHm, real1
+MUL    0.2, real1
+MOVE    VL, real2
+SUB    real1, real2
+MOVE    real2, real3
+MUL    1.84, real3
+(* Network 1 *)
+LD    TRUE
+MOVE    VHm, real4
+MUL    VHm, real4
+MOVE    real4, real5
+MUL    VHm, real5
+SQRT    real5, real6
+(* Network 2 *)
+LD    TRUE
+MOVE    real3, real7
+MUL    real6, real7
+MOVE    real7, VQm3h
+MUL    3600.00, VQm3h

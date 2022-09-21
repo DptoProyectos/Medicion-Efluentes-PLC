@@ -1,0 +1,29 @@
+(*2*)
+(* Network 0 *)
+(*YCHESTADO DE CONDICIONES INICIALES DEL FUNCIONAMIENTO DEL SISTEMAstate = 99*)
+LDN    %M0.7
+CAL    SBR01
+(* Network 1 *)
+(*YCHBloque que registra todas las señales que se toman como entrada para el softwareSe excluye las provenientes del HMI*)
+LDN    %M0.7
+CAL    SBR02
+(* Network 2 *)
+(*YCHBloque que lee todas las señales que provienen del HMI*)
+LD    FALSE
+CAL    SBR03
+(* Network 3 *)
+(*YCHbloque donde se encuentra toda la lógica que se ejecuta en el proceso de toma, análisis e inserción de muestra*)
+LDN    %M0.7
+CAL    SBR04
+(* Network 4 *)
+(*YCHbloque de espera entre que termina un ciclo de toma, analisis e inserción de muestra y otroState = 100*)
+LDN    %M0.7
+CAL    SBR00    Tpoll
+(* Network 5 *)
+(*YCHBloque que registra todas las señales que se toman como salida del softwareSe excluye lo que se escribe hacia el HMI*)
+LDN    %M0.7
+CAL    SBR05
+(* Network 6 *)
+(*YCHBloque que escribe todas las señales que provienen del software y se tienen que usar en el HMI*)
+LDN    %M0.7
+CAL    SBR06

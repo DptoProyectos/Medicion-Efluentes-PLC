@@ -1,0 +1,27 @@
+VAR_INPUT
+    DIST  AT  %LD162 : REAL ; (* DISTANCIA DEL SENSOR AL AGUA (METROS) *) 
+END_VAR
+VAR_OUTPUT
+    ALH  AT  %LD166 : REAL ; (* ALTURA DEL NIVEL DEL AGUA (METROS) *) 
+    IOUT  AT  %LW154 : INT ; (* VALOR DE CORRIENTE A GENERAR EN EL CANAL DE SALIDA *) 
+END_VAR
+VAR
+    link_DI  AT  %LD72 : DINT ; (*  *) 
+    link_INL  AT  %LW66 : INT ; (*  *) 
+    link_IN  AT  %LW170 : INT ; (*  *) 
+    link_INH  AT  %LW92 : INT ; (*  *) 
+    trash_DI  AT  %LD172 : DINT ; (*  *) 
+    link_R  AT  %LD176 : REAL ; (*  *) 
+    cnt_1  AT  %LD184 : REAL ; (*  *) 
+    cnt_2  AT  %LD188 : REAL ; (*  *) 
+    cnt_3  AT  %LD192 : REAL ; (*  *) 
+    cnt_4  AT  %LD196 : REAL ; (*  *) 
+    cnt_5  AT  %LD200 : REAL ; (*  *) 
+    cnt_6  AT  %LD204 : REAL ; (*  *) 
+    link_DI1  AT  %LD248 : DINT ; (*  *) 
+    link_R1  AT  %LD268 : REAL ; (*  *) 
+    Qint  AT  %LW254 : INT ; (*  *) 
+    trash_R  AT  %LD256 : REAL ; (*  *) 
+    iminReal  AT  %LD260 : REAL ; (*  *) 
+    imaxReal  AT  %LD264 : REAL ; (*  *) 
+END_VAR

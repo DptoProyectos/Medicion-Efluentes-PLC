@@ -1,0 +1,15 @@
+(*2*)
+(* Network 0 *)
+(*STATE 0MODE SELECTION*)
+LD    TRUE
+EQ    STATE, 0
+AND(
+LD    TRUE
+LT    CNT_SAMP, MAX_SAMP
+MOVE    1, STATE
+OR(
+LD    TRUE
+GE    CNT_SAMP, MAX_SAMP
+MOVE    7, STATE
+)
+)

@@ -1,0 +1,95 @@
+(*2*)
+(* Network 0 *)
+(*CALCULO DE ZITA EN RADIANES*)
+LD    TRUE
+MOVE    VD, real0
+DIV    2.0, real0
+MOVE    VHm, real1
+SUB    real0, real1
+MOVE    real1, real2
+DIV    real0, real2
+ACOS    real2, real5
+(* Network 1 *)
+(*CALCULO DE ZITA EN GRADOSConversión de radianes a grados*)
+LD    TRUE
+MOVE    180.00, real0
+DIV    3.141592653589793238462643383279, real0
+MOVE    real0, real6
+MUL    real5, real6
+(* Network 2 *)
+(*CALCULO DE AREA MOJADA EN M2*)
+LD    TRUE
+MOVE    VD, real0
+MUL    VD, real0
+AND(
+LD    TRUE
+MOVE    real0, real1
+MUL    3.141592653589793238462643383279, real1
+MOVE    real1, real2
+DIV    4.0, real2
+OR(
+LD    TRUE
+MUL    real6, real1
+MOVE    real1, real3
+DIV    720.0, real3
+)
+OR(
+LD    TRUE
+MOVE    2.0, real1
+MUL    real5, real1
+SIN    real1, real1
+MUL    real1, real0
+MOVE    real0, real4
+DIV    8.0, real4
+)
+)
+MOVE    real2, real0
+SUB    real3, real0
+MOVE    real0, real7
+ADD    real4, real7
+(* Network 3 *)
+(*CALUCULO DEL PERIMETRO MOJADO EN METROS*)
+LD    TRUE
+AND(
+LD    TRUE
+MOVE    real6, real0
+DIV    180.0, real0
+MOVE    1.0, real1
+SUB    real0, real1
+OR(
+LD    TRUE
+MOVE    3.141592653589793238462643383279, real2
+MUL    VD, real2
+)
+)
+MOVE    real1, real8
+MUL    real2, real8
+(* Network 4 *)
+(*CALCULO DEL RADIO MOJADO EN METROS (RADIO MOJADO)*)
+LD    TRUE
+MOVE    real7, real9
+DIV    real8, real9
+(* Network 5 *)
+(*USO DE LA FORMULA DE MANNING PARA EL CALCULO DEL CAUDAL*)
+LD    TRUE
+AND(
+LD    TRUE
+MOVE    3600.0, real2
+DIV    Vn, real2
+OR(
+LD    TRUE
+LN    real9, real0
+MUL    0.66666666666, real0
+EXP    real0, real0
+MOVE    real0, real3
+MUL    real7, real3
+)
+OR(
+LD    TRUE
+SQRT    VSo, real4
+)
+)
+MOVE    real2, real0
+MUL    real3, real0
+MOVE    real0, VQm3h
+MUL    real4, VQm3h

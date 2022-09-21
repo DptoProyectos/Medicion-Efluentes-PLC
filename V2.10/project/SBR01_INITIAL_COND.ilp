@@ -1,0 +1,15 @@
+(*2*)
+(* Network 0 *)
+(*YCHSI SE CUMPLE QUE ES LA 1RA CORRIDA DEL SISTEMA O SE PASA DE STOP PARA STAR ME MUEVO PARA UN ESTADO DE CONDICIONES INICIALES (state = 99)*)
+LD    %SM0.1
+MOVE    99, State
+(* Network 1 *)
+(*YCHArranco por el estado 0*)
+LD    TRUE
+EQ    99, State
+MOVE    0, SampleElaps
+(* Network 2 *)
+(*YCHPongo el contadore de muetras entre limpiezas en cero*)
+LD    TRUE
+EQ    99, State
+MOVE    0, State

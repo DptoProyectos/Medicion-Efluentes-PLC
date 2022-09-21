@@ -1,0 +1,9 @@
+(*2*)
+(* Network 0 *)
+(*YCHModulo que brida el tiempo entre dos pulsos valido seguidos y cuenta los mismos*)
+LD    TRUE
+CAL    SBR22    TimePulseOn, %I0.0, PulseReset, TimePulseOff, PulseTime, PulsesCount
+(* Network 1 *)
+(*YCHSeñal run*)
+LD    %I0.1
+ST   %M103.1

@@ -1,0 +1,23 @@
+(*2*)
+(* Network 0 *)
+(*FORMULA DE FRANSIS*)
+LD    TRUE
+MOVE    VHm, cnt_1
+MUL    0.2, cnt_1
+MOVE    VL, cnt_2
+SUB    cnt_1, cnt_2
+MOVE    cnt_2, cnt_3
+MUL    1.84, cnt_3
+(* Network 1 *)
+LD    TRUE
+MOVE    VHm, link_R
+MUL    VHm, link_R
+MOVE    link_R, cnt_4
+MUL    VHm, cnt_4
+SQRT    cnt_4, cnt_5
+(* Network 2 *)
+LD    TRUE
+MOVE    cnt_3, cnt_6
+MUL    cnt_5, cnt_6
+MOVE    cnt_6, VQm3h
+MUL    3600.00, VQm3h

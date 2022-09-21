@@ -1,0 +1,5 @@
+VAR
+    medAi  AT  %LD68 : REAL ; (*  *) 
+    cau  AT  %LD76 : REAL ; (*  *) 
+    link_Int  AT  %LW156 : INT ; (*  *) 
+END_VAR

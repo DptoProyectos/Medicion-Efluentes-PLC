@@ -1,0 +1,13 @@
+VAR_INPUT
+    START  AT  %L1.4 : BOOL ; (*  *) 
+END_VAR
+VAR_OUTPUT
+    VAI0  AT  %LW42 : INT ; (*  *) 
+    VAI1  AT  %LW44 : INT ; (*  *) 
+    VAI2  AT  %LW46 : INT ; (*  *) 
+    VAI3  AT  %LW48 : INT ; (*  *) 
+    BSY  AT  %L1.5 : BOOL ; (*  *) 
+END_VAR
+VAR
+    modState  AT  %LW50 : INT ; (*  *) 
+END_VAR

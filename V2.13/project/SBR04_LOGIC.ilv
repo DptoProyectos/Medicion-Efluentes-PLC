@@ -1,0 +1,3 @@
+VAR
+    lgBlock  AT  %L0.3 : BOOL ; (*  *) 
+END_VAR

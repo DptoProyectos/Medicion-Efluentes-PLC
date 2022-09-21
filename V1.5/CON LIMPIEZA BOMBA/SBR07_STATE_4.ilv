@@ -1,0 +1,3 @@
+VAR
+    time21  AT  %LW16 : INT ; (*  *) 
+END_VAR

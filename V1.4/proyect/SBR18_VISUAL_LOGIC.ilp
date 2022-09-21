@@ -1,0 +1,6 @@
+(*2*)
+(* Network 0 *)
+LD    TRUE
+NE    %VW3660, 0
+AND    %M0.0
+ST   %M0.3

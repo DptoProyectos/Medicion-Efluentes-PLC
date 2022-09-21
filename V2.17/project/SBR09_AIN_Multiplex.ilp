@@ -1,0 +1,86 @@
+(*2*)
+(* Network 0 *)
+(*YCHCuando se pasa de cero a uno la señal de start se inicia un ciclo de toma de medida*)
+LD    START
+R_TRIG
+MOVE    0, modState
+(* Network 1 *)
+(*YCHPongo las salidas en la siguiente configuraciónQ0.4 = 0Q0.5 = 0Q0.6 = 0*)
+LD    TRUE
+EQ    modState, 0
+R    %Q0.4
+R    %Q0.5
+R    %Q0.6
+(* Network 2 *)
+(*YCHEspero un segundo con las salidas en esta posicion antes de tomar la muestra*)
+LD    TRUE
+EQ    modState, 0
+TON   T70, 50
+__CR_EQ_1
+MOVE    T70, int0
+__CR_RESTORE
+MOVE    %AIW0, VAI0
+MOVE    1, modState
+(* Network 3 *)
+(*YCHPongo las salidas en la siguiente configuraciónQ0.4 = 0Q0.5 = 1Q0.6 = 0*)
+LD    TRUE
+EQ    modState, 1
+R    %Q0.4
+S    %Q0.5
+R    %Q0.6
+(* Network 4 *)
+(*YCHEspero un segundo con las salidas en esta posicion antes de tomar la muestra*)
+LD    TRUE
+EQ    modState, 1
+TON   T71, 50
+__CR_EQ_1
+MOVE    T71, int0
+__CR_RESTORE
+MOVE    %AIW0, VAI1
+MOVE    2, modState
+(* Network 5 *)
+(*YCHPongo las salidas en la siguiente configuraciónQ0.4 = 1Q0.5 = 0Q0.6 = 0*)
+LD    TRUE
+EQ    modState, 2
+S    %Q0.4
+R    %Q0.5
+R    %Q0.6
+(* Network 6 *)
+(*YCHEspero un segundo con las salidas en esta posicion antes de tomar la muestra*)
+LD    TRUE
+EQ    modState, 2
+TON   T72, 50
+__CR_EQ_1
+MOVE    T72, int0
+__CR_RESTORE
+MOVE    %AIW0, VAI2
+MOVE    3, modState
+(* Network 7 *)
+(*YCHPongo las salidas en la siguiente configuraciónQ0.4 = 1Q0.5 = 0Q0.6 = 1*)
+LD    TRUE
+EQ    modState, 3
+S    %Q0.4
+R    %Q0.5
+S    %Q0.6
+(* Network 8 *)
+(*YCHEspero un segundo con las salidas en esta posicion antes de tomar la muestra*)
+LD    TRUE
+EQ    modState, 3
+TON   T73, 50
+__CR_EQ_1
+MOVE    T73, int0
+__CR_RESTORE
+MOVE    %AIW0, VAI3
+MOVE    4, modState
+(* Network 9 *)
+(*YCHPongo las salidas en la siguiente configuración para ahorrar energiaQ0.4 = 0Q0.5 = 0Q0.6 = 0*)
+LD    TRUE
+EQ    modState, 4
+R    %Q0.4
+R    %Q0.5
+R    %Q0.6
+(* Network 10 *)
+(*YCHActivo el bit busy para indicar que se esta en proceso de toma de medida*)
+LD    TRUE
+NE    modState, 4
+ST   BSY

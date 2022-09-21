@@ -1,0 +1,6 @@
+VAR_INPUT
+    H  AT  %LD78 : REAL ; (* Altura del agua en metros *) 
+END_VAR
+VAR_OUTPUT
+    Qm3h  AT  %LD82 : REAL ; (* Caudal calculado (m3h) *) 
+END_VAR

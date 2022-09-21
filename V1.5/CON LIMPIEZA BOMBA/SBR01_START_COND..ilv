@@ -1,0 +1,3 @@
+VAR_OUTPUT
+    OUT1  AT  %LW46 : INT ; (* Estado inicial *) 
+END_VAR

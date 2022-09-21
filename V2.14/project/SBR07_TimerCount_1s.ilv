@@ -1,0 +1,10 @@
+VAR_INPUT
+    ENABLE  AT  %L0.4 : BOOL ; (*  *) 
+END_VAR
+VAR_IN_OUT
+    CurrTime  AT  %LD34 : DINT ; (*  *) 
+END_VAR
+VAR
+    toggle  AT  %L0.5 : BOOL ; (*  *) 
+    start  AT  %L0.7 : BOOL ; (*  *) 
+END_VAR

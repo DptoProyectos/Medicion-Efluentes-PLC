@@ -1,0 +1,21 @@
+(*2*)
+(* Network 0 *)
+(*STATE 1SAMPLING*)
+LD    TRUE
+EQ    STATE, 1
+AND(
+LD    TRUE
+MOVE    1, SAMPLE_PUMP
+OR(
+LD    TRUE
+MOVE    0, CLEAN_PUMP
+)
+OR(
+LD    TRUE
+MOVE    0, SWITCH_PUMP
+)
+OR(
+LD    TRUE
+MOVE    2, STATE
+)
+)

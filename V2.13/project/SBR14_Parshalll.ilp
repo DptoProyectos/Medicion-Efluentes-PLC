@@ -1,0 +1,31 @@
+(*2*)
+(* Network 0 *)
+(*CUANDO LA ALTURA DEL AGUA ES MENOR QUE LA MINIMA QUE PUEDE MEDIR EL CANAL DECIMOS QUE EL CAUDAL DE SALIDA ES CERO*)
+LD    %SM0.0
+LT    VHm, VHmin
+MOVE    0.0, VQm3h
+(* Network 1 *)
+(*CUANDO LA ALTURA DEL AGUA ESTA EN LOS VALORES PERMISIBLES DEL CANAL CALCULAMOS CAUDAL DE SALIDA*)
+LD    %SM0.0
+GE    VHm, VHmin
+LE    VHm, VHmax
+LN    VHm, real0
+MOVE    real0, real1
+MUL    Vn, real1
+EXP    real1, real1
+MOVE    real1, real0
+MUL    3600.0, real0
+MOVE    real0, VQm3h
+MUL    VC1, VQm3h
+(* Network 2 *)
+(*CUANDO LA ALTURA DEL AGUA ES MAYOR QUE LA MAXIMA QUE PUEDE MEDIR EL CANAL DECIMOS QUE EL CAUDAL DE SALIDA ES EL CAUDAL MÁXIMO*)
+LD    %SM0.0
+GT    VHm, VHmax
+LN    VHmax, real0
+MOVE    real0, real1
+MUL    Vn, real1
+EXP    real1, real1
+MOVE    real1, real0
+MUL    3600.0, real0
+MOVE    real0, VQm3h
+MUL    VC1, VQm3h

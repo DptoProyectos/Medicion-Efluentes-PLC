@@ -1,0 +1,5 @@
+VAR_OUTPUT
+    OUT1  AT  %L0.0 : BOOL ; (* Salida para la bomba de muestra *) 
+    OUT2  AT  %L0.1 : BOOL ; (* Salida para la bomba de limpieza *) 
+    OUT3  AT  %L0.2 : BOOL ; (* Salida para la señal de polleo *) 
+END_VAR

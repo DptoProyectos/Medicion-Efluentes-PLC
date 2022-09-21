@@ -1,0 +1,21 @@
+(*2*)
+(* Network 0 *)
+(*STATE 3READ FRAME*)
+LD    TRUE
+EQ    STATE, 5
+AND(
+LD    TRUE
+MOVE    0, SIGNAL_PULL
+OR(
+LD    TRUE
+INC    CNT_SAMP
+)
+OR(
+LD    TRUE
+MOVE    0, SAMPLE_PUMP
+)
+OR(
+LD    TRUE
+MOVE    6, STATE
+)
+)
